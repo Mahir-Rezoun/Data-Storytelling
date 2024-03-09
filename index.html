@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paginated Vega-Lite Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-container {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.visualization-container {
+  margin-top: 20px;
+}
+
+.pagination {
+  margin-bottom: 20px;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #0056b3;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  background-color: #0056b3;
+}
+
+  </style>
+</head>
+<body>
+  <div id="pagination" class="pagination"></div>
+  <div id="chart-container" class="chart-container"></div>
+
+  <script>
+    const chartsData = [
+      {
+        "Section-title": "Section 1 Title",
+        "Section-text": "Description for Section 1",
+        "Visualization-code": {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "description": "A simple bar chart",
+          "data": {
+            "values": [
+              {"category": "A", "value": 20},
+              {"category": "B", "value": 30},
+              {"category": "C", "value": 40},
+              {"category": "D", "value": 50},
+              {"category": "E", "value": 60},
+              {"category": "F", "value": 70},
+              {"category": "G", "value": 80},
+              {"category": "H", "value": 90},
+              {"category": "I", "value": 100}
+            ]
+          },
+          "mark": "bar",
+          "encoding": {
+            "x": {"field": "category", "type": "ordinal"},
+            "y": {"field": "value", "type": "quantitative"}
+          }
+        }
+      },
+      {
+        "Section-title": "Section 2 Title",
+        "Section-text": "Description for Section 2",
+        "Visualization-code": {
+            "$schema": "http://vega.github.io/schema/vega-lite/v5.json",
+            "description": "A scatterplot showing body mass and flipper lengths of penguins.",
+            "data": {
+                "values": [
+            {"Flipper Length (mm)": 181, "Body Mass (g)": 3750, "Species": "Adelie"},
+            {"Flipper Length (mm)": 186, "Body Mass (g)": 3800, "Species": "Adelie"},
+            {"Flipper Length (mm)": 195, "Body Mass (g)": 3250, "Species": "Adelie"},
+            {"Flipper Length (mm)": 193, "Body Mass (g)": 3450, "Species": "Adelie"},
+            {"Flipper Length (mm)": 190, "Body Mass (g)": 3650, "Species": "Adelie"},
+            {"Flipper Length (mm)": 181, "Body Mass (g)": 3900, "Species": "Gentoo"},
+            {"Flipper Length (mm)": 186, "Body Mass (g)": 3950, "Species": "Gentoo"},
+            {"Flipper Length (mm)": 195, "Body Mass (g)": 3300, "Species": "Gentoo"},
+            {"Flipper Length (mm)": 193, "Body Mass (g)": 3500, "Species": "Gentoo"},
+            {"Flipper Length (mm)": 190, "Body Mass (g)": 3700, "Species": "Gentoo"},
+            {"Flipper Length (mm)": 181, "Body Mass (g)": 3550, "Species": "Chinstrap"},
+            {"Flipper Length (mm)": 186, "Body Mass (g)": 3600, "Species": "Chinstrap"},
+            {"Flipper Length (mm)": 195, "Body Mass (g)": 3050, "Species": "Chinstrap"},
+            {"Flipper Length (mm)": 193, "Body Mass (g)": 3250, "Species": "Chinstrap"},
+            {"Flipper Length (mm)": 190, "Body Mass (g)": 3450, "Species": "Chinstrap"}
+            ]
+
+            },
+            "mark": "point",
+            "encoding": {
+                "x": {
+                "field": "Flipper Length (mm)",
+                "type": "quantitative",
+                "scale": {"zero": false}
+                },
+                "y": {
+                "field": "Body Mass (g)",
+                "type": "quantitative",
+                "scale": {"zero": false}
+                },
+                "color": {"field": "Species", "type": "nominal"},
+                "shape": {"field": "Species", "type": "nominal"}
+            }
+        }
+      },
+
+      {
+        "Section-title": "Section 3 Title",
+        "Section-text": "Description for Section 3",
+        "Visualization-code": {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "description": "A simple line chart",
+          "data": {
+            "values": [
+              {"x": 0, "y": 0},
+              {"x": 1, "y": 1},
+              {"x": 2, "y": 2},
+              {"x": 3, "y": 3},
+              {"x": 4, "y": 4},
+              {"x": 5, "y": 5},
+              {"x": 6, "y": 6},
+              {"x": 7, "y": 7},
+              {"x": 8, "y": 8},
+              {"x": 9, "y": 9}
+            ]
+          },
+          "mark": "line",
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative"},
+            "y": {"field": "y", "type": "quantitative"}
+          }
+        }
+      },
+
+      {
+        "Section-title": "Section 4 Title",
+        "Section-text": "Description for Section 4",
+        "Visualization-code": {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple pie chart with embedded data.",
+  "data": {
+    "values": [
+      {"category": 1, "value": 4},
+      {"category": 2, "value": 6},
+      {"category": 3, "value": 10},
+      {"category": 4, "value": 3},
+      {"category": 5, "value": 7},
+      {"category": 6, "value": 8}
+    ]
+  },
+  "mark": "arc",
+  "encoding": {
+    "theta": {"field": "value", "type": "quantitative"},
+    "color": {"field": "category", "type": "nominal"}
+  }
+}
+      }
+    ];
+
+    const numPages = chartsData.length;
+
+    let currentPage = 0;
+
+    function renderSection(sectionIndex) {
+        const sectionData = chartsData[sectionIndex];
+        const chartContainer = document.getElementById('chart-container');
+        chartContainer.innerHTML = '';
+
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = sectionData["Section-title"];
+        chartContainer.appendChild(titleElement);
+
+        const textElement = document.createElement('p');
+        textElement.textContent = sectionData["Section-text"];
+        chartContainer.appendChild(textElement);
+
+        const visContainer = document.createElement('div');
+        visContainer.className = 'visualization-container';
+        chartContainer.appendChild(visContainer);
+
+        vegaEmbed(visContainer, sectionData["Visualization-code"]);
+        }
+
+
+    function renderPagination() {
+      const paginationContainer = document.getElementById('pagination');
+      paginationContainer.innerHTML = '';
+
+      for (let i = 0; i < chartsData.length; i++) {
+        const button = document.createElement('button');
+        button.textContent = "Section " + (i + 1);
+        //button.textContent = i + 1;
+        button.addEventListener('click', () => {
+          currentPage = i;
+          renderSection(currentPage);
+          highlightButton(i);
+        });
+        paginationContainer.appendChild(button);
+      }
+
+      highlightButton(currentPage);
+    }
+
+    function highlightButton(page) {
+      const buttons = document.querySelectorAll('.pagination button');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (parseInt(btn.textContent) === page + 1) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    renderPagination();
+    renderSection(currentPage);
+  </script>
+</body>
+</html>
