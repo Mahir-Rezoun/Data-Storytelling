@@ -51,6 +51,8 @@
   background-color: #0056b3;
 }
 
+
+
   </style>
 </head>
 <body>
@@ -81,8 +83,13 @@
           "mark": "bar",
           "encoding": {
             "x": {"field": "category", "type": "ordinal"},
-            "y": {"field": "value", "type": "quantitative"}
+            "y": {"field": "value", "type": "quantitative"},
+            "tooltip": [
+          {"field": "category", "type": "ordinal"},
+          {"field": "value", "type": "quantitative"}
+        ]
           }
+          
         }
       },
       {
@@ -124,7 +131,13 @@
                 "scale": {"zero": false}
                 },
                 "color": {"field": "Species", "type": "nominal"},
-                "shape": {"field": "Species", "type": "nominal"}
+                "shape": {"field": "Species", "type": "nominal"},
+
+                "tooltip": [
+                {"field": "Flipper Length (mm)", "type": "quantitative"},
+                {"field": "Body Mass (g)", "type": "quantitative"},
+                {"field": "Species", "type": "nominal"}
+            ]
             }
         }
       },
@@ -144,7 +157,7 @@
               {"x": 4, "y": 4},
               {"x": 5, "y": 5},
               {"x": 6, "y": 6},
-              {"x": 7, "y": 7},
+              {"x": 7, "y": 3},
               {"x": 8, "y": 8},
               {"x": 9, "y": 9}
             ]
@@ -152,7 +165,12 @@
           "mark": "line",
           "encoding": {
             "x": {"field": "x", "type": "quantitative"},
-            "y": {"field": "y", "type": "quantitative"}
+            "y": {"field": "y", "type": "quantitative"},
+
+            "tooltip": [
+        {"field": "x", "type": "quantitative"},
+        {"field": "y", "type": "quantitative"}
+      ]
           }
         }
       },
@@ -176,7 +194,13 @@
   "mark": "arc",
   "encoding": {
     "theta": {"field": "value", "type": "quantitative"},
-    "color": {"field": "category", "type": "nominal"}
+    "color": {"field": "category", "type": "nominal"},
+
+    "tooltip": [
+      {"field": "category", "type": "nominal"},
+      {"field": "value", "type": "quantitative"}
+    ]
+
   }
 }
       }
